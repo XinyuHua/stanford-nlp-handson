@@ -42,8 +42,8 @@ import edu.stanford.nlp.trees.TypedDependency;
 
 public class StanfordNLPRunner{
 	 	
-		protected StanfordCoreNLP pipeline;
-		MaxentTagger tagger =  new MaxentTagger("lib/english-left3words-distsim.tagger");
+        protected StanfordCoreNLP pipeline;
+    	MaxentTagger tagger =  new MaxentTagger("lib/english-left3words-distsim.tagger");
         
         public static String[] special_symbols = {"'s","'ve","'m","'d","n't","'re"};
         static LexicalizedParser lp;
@@ -203,7 +203,7 @@ public class StanfordNLPRunner{
             BufferedWriter fileWriter = new BufferedWriter(new FileWriter(PATH_OUT));
             String line;
             while((line = fileReader.readLine())!=null){
-                String[] rst = dependencyparse(line);
+                String[] rst = dependencyParse(line);
                 for(String tag : rst){
                     fileWriter.append(tag + " ");
                 }
@@ -222,19 +222,19 @@ public class StanfordNLPRunner{
 
         }
 
-		public static String[] dependencyParse(String sentence){
-		String[] result;
-		String[] sent = sentence.split("((\\s+)|(?<=,)|(?=,)|(?=\\.))");
-		Tree parse = lp.apply(Sentence.toWordList(sent));
-		GrammaticalStructure gs = gsf.newGrammaticalStructure(parse);
-		Collection<TypedDependency> tdl = gs.typedDependencies();
-		result = new String[tdl.size()];
-		int i = 0;
-		for(TypedDependency t : tdl){
-			result[ i++ ] = t.toString();
-		}
-		return result;
-	}
+    public static String[] dependencyParse(String sentence){
+        String[] result;
+        String[] sent = sentence.split("((\\s+)|(?<=,)|(?=,)|(?=\\.))");
+        Tree parse = lp.apply(Sentence.toWordList(sent));
+        GrammaticalStructure gs = gsf.newGrammaticalStructure(parse);
+        Collection<TypedDependency> tdl = gs.typedDependencies();
+        result = new String[tdl.size()];
+        int i = 0;
+        for(TypedDependency t : tdl){
+            result[ i++ ] = t.toString();
+        }
+        return result;
+    }
 	
 	
 }
